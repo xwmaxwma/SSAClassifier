@@ -1,6 +1,6 @@
 ## Paper
 
-> Title: Semantic and Spatial Adaptive Pixel-level Classifier for Semantic Segmentation [arxiv]
+> Title: Semantic and Spatial Adaptive Pixel-level Classifier for Semantic Segmentation
 > Authors: Xiaowen Ma, Zhenliang Ni and Xinghao Chen
 > Citation:
 > 
