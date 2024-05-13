@@ -5,7 +5,14 @@
 > Citation:
 > 
 > ```
->   
+>   @misc{ma2024semantic,
+      title={Semantic and Spatial Adaptive Pixel-level Classifier for Semantic Segmentation}, 
+      author={Xiaowen Ma and Zhenliang Ni and Xinghao Chen},
+      year={2024},
+      eprint={2405.06525},
+      archivePrefix={arXiv},
+      primaryClass={cs.CV}
+}
 >   ```
 
 ## The overall architecture of SSA
