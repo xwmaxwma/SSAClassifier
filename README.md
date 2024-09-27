@@ -1,12 +1,11 @@
 <div align="center">
 <h1>SSAClassifier </h1>
 <h3>Semantic and Spatial Adaptive Pixel-level Classifier for Semantic Segmentation</h3>
-
 [Xiaowen Ma](https://scholar.google.com/citations?hl=zh-CN&user=UXj8Q6kAAAAJ)<sup>1,2</sup>, [Zhenliang Ni](https://scholar.google.com/citations?user=2urTmpkAAAAJ&hl=zh-CN&oi=sra)<sup>1</sup>, [Xinghao Chen](https://scholar.google.com/citations?user=tuGWUVIAAAAJ&hl=zh-CN&oi=ao)<sup>1</sup>
 
 <sup>1</sup> Huawei Noah’s Ark Lab, <sup>2</sup> Zhejiang University
 
-Paper: ([this](https://arxiv.org/abs/2405.06525))
+ [Paper Link](https://arxiv.org/abs/2405.06525)
 
 </div>
 
@@ -24,9 +23,9 @@ SSAClassifier is an effecient and powerful pixel-level classifier, which signifi
 
 
 
-## 🏆Performance
+## 🏆 Performance
 
-#### ADE20K
+#### 1️⃣ ADE20K
 
 **Iters:** 160000	**Input size:** 512x512	**Batch size:** 16
 
@@ -42,39 +41,39 @@ SSAClassifier is an effecient and powerful pixel-level classifier, which signifi
 
 - Light weight models
 
-  | +SSAClassifier |                           Backbone                           | Iters  | Latency (ms) | Params (M) | Flops (G) | mIoU (ss) |
-  | :------------: | :----------------------------------------------------------: | :----: | :----------: | ---------- | :-------: | :-------: |
-  |   AFFormer-B   | [AFFormer-B](https://github.com/dongbo811/AFFormer?tab=readme-ov-file) | 160000 |     26.0     | 3.3        |    4.4    |   42.74   |
-  |  SeaFormer-B   | [SeaFormer-B](https://github.com/fudan-zvg/SeaFormer/tree/main/seaformer-cls) | 160000 |     27.3     | 8.8        |    1.8    |   42.46   |
-  |   SegNext-T    | [MSCAN-T](https://download.openmmlab.com/mmsegmentation/v0.5/pretrain/segnext/mscan_t_20230227-119e8c9f.pth) | 160000 |     23.3     | 4.6        |    6.3    |   43.90   |
-  |  SeaFormer-L   | [SeaFormer-L](https://github.com/fudan-zvg/SeaFormer/tree/main/seaformer-cls) | 160000 |     29.9     | 14.2       |    6.4    |   45.36   |
-  |    CGRSeg-B    | [EfficientFormerV2-S2](https://github.com/snap-research/EfficientFormer) | 160000 |     36.0     | 19.3       |    7.6    |   47.10   |
-  |    CGRSeg-L    | [EfficientFormerV2-L](https://github.com/snap-research/EfficientFormer) | 160000 |     42.6     | 35.8       |   14.8    |   49.00   |
+  | +SSAClassifier |                           Backbone                           | Latency (ms) | Params (M) | Flops (G) | mIoU (ss) |
+  | :------------: | :----------------------------------------------------------: | :----------: | ---------- | :-------: | :-------: |
+  |   AFFormer-B   | [AFFormer-B](https://github.com/dongbo811/AFFormer?tab=readme-ov-file) |     26.0     | 3.3        |    4.4    |   42.74   |
+  |  SeaFormer-B   | [SeaFormer-B](https://github.com/fudan-zvg/SeaFormer/tree/main/seaformer-cls) |     27.3     | 8.8        |    1.8    |   42.46   |
+  |   SegNext-T    | [MSCAN-T](https://download.openmmlab.com/mmsegmentation/v0.5/pretrain/segnext/mscan_t_20230227-119e8c9f.pth) |     23.3     | 4.6        |    6.3    |   43.90   |
+  |  SeaFormer-L   | [SeaFormer-L](https://github.com/fudan-zvg/SeaFormer/tree/main/seaformer-cls) |     29.9     | 14.2       |    6.4    |   45.36   |
+  |    CGRSeg-B    | [EfficientFormerV2-S2](https://github.com/snap-research/EfficientFormer) |     36.0     | 19.3       |    7.6    |   47.10   |
+  |    CGRSeg-L    | [EfficientFormerV2-L](https://github.com/snap-research/EfficientFormer) |     42.6     | 35.8       |   14.8    |   49.00   |
 
-#### COCO-Stuff-10K
+#### 2️⃣ COCO-Stuff-10K
 
 **Iters:** 80000	**Input size:** 512x512	**Batch size:** 16
 
 - General models
 
-  | +SSAClassifier |                           Backbone                           | Latency (ms) | Params(M) | Flops (G) | mIoU (ss) |
-  | :------------: | :----------------------------------------------------------: | :----------: | --------- | :-------: | :-------: |
-  |     OCRNet     | [HRNet-W48](https://download.openmmlab.com/pretrain/third_party/hrnetv2_w48-d2186c55.pth) |     69.3     | 8.7       |   165.0   |   37.94   |
-  |    UperNet     | [Swin-T](https://download.openmmlab.com/mmsegmentation/v0.5/pretrain/swin/swin_tiny_patch4_window7_224_20220317-1cdeb081.pth) |     54.3     | 61.1      |   236.3   |   42.30   |
-  |   SegFormer    | [MiT-B5](https://download.openmmlab.com/mmsegmentation/v0.5/pretrain/segformer/mit_b5_20220624-658746d9.pth) |     70.1     | 82.3      |   52.6    |   45.55   |
-  |    UperNet     | [Swin-L](https://download.openmmlab.com/mmsegmentation/v0.5/pretrain/swin/swin_large_patch4_window7_224_22k_20220412-aeecf2aa.pth) |    107.3     | 234.9     |   405.2   |   48.94   |
-  |  ViT-Adapter   |    [ViT-Adapter-L](https://github.com/czczup/ViT-Adapter)    |    284.9     | 364.9     |   616.3   |   51.2    |
+  | +SSAClassifier |                           Backbone                           | Latency (ms) | Params (M) | Flops (G) | mIoU (ss) |
+  | :------------: | :----------------------------------------------------------: | :----------: | ---------- | :-------: | :-------: |
+  |     OCRNet     | [HRNet-W48](https://download.openmmlab.com/pretrain/third_party/hrnetv2_w48-d2186c55.pth) |     69.3     | 8.7        |   165.0   |   37.94   |
+  |    UperNet     | [Swin-T](https://download.openmmlab.com/mmsegmentation/v0.5/pretrain/swin/swin_tiny_patch4_window7_224_20220317-1cdeb081.pth) |     54.3     | 61.1       |   236.3   |   42.30   |
+  |   SegFormer    | [MiT-B5](https://download.openmmlab.com/mmsegmentation/v0.5/pretrain/segformer/mit_b5_20220624-658746d9.pth) |     70.1     | 82.3       |   52.6    |   45.55   |
+  |    UperNet     | [Swin-L](https://download.openmmlab.com/mmsegmentation/v0.5/pretrain/swin/swin_large_patch4_window7_224_22k_20220412-aeecf2aa.pth) |    107.3     | 234.9      |   405.2   |   48.94   |
+  |  ViT-Adapter   |    [ViT-Adapter-L](https://github.com/czczup/ViT-Adapter)    |    284.9     | 364.9      |   616.3   |   51.2    |
 
 - Light weight models
 
-  | +SSAClassifier |                           Backbone                           | Iters | Latency (ms) | Flops (G) | mIoU (ss) |
-  | :------------: | :----------------------------------------------------------: | :---: | :----------: | :-------: | :-------: |
-  |   AFFormer-B   | [AFFormer-B](https://github.com/dongbo811/AFFormer?tab=readme-ov-file) | 80000 |     26.0     |    4.4    |   36.40   |
-  |  SeaFormer-B   | [SeaFormer-B](https://github.com/fudan-zvg/SeaFormer/tree/main/seaformer-cls) | 80000 |     27.3     |    1.8    |   35.92   |
-  |   SegNext-T    | [MSCAN-T](https://download.openmmlab.com/mmsegmentation/v0.5/pretrain/segnext/mscan_t_20230227-119e8c9f.pth) | 80000 |     23.3     |    6.3    |   38.91   |
-  |  SeaFormer-L   | [SeaFormer-L](https://github.com/fudan-zvg/SeaFormer/tree/main/seaformer-cls) | 80000 |     29.9     |    6.4    |   38.48   |
+  | +SSAClassifier |                           Backbone                           | Latency (ms) | Params (M) | Flops (G) | mIoU (ss) |
+  | :------------: | :----------------------------------------------------------: | :----------: | ---------- | :-------: | :-------: |
+  |   AFFormer-B   | [AFFormer-B](https://github.com/dongbo811/AFFormer?tab=readme-ov-file) |     26.0     | 3.3        |    4.4    |   36.40   |
+  |  SeaFormer-B   | [SeaFormer-B](https://github.com/fudan-zvg/SeaFormer/tree/main/seaformer-cls) |     27.3     | 8.8        |    1.8    |   35.92   |
+  |   SegNext-T    | [MSCAN-T](https://download.openmmlab.com/mmsegmentation/v0.5/pretrain/segnext/mscan_t_20230227-119e8c9f.pth) |     23.3     | 4.6        |    6.3    |   38.91   |
+  |  SeaFormer-L   | [SeaFormer-L](https://github.com/fudan-zvg/SeaFormer/tree/main/seaformer-cls) |     29.9     | 14.2       |    6.4    |   38.48   |
 
-#### PASCAL-Context
+#### 3️⃣ PASCAL-Context
 
 **Iters:** 80000	**Input size:** 480x480	**Batch size:** 16
 
@@ -90,12 +89,12 @@ SSAClassifier is an effecient and powerful pixel-level classifier, which signifi
 
 - Light weight models
 
-  | +SSAClassifier |                           Backbone                           | Latency (ms) | Flops (G) | mIoU (ss) |
-  | :------------: | :----------------------------------------------------------: | :----------: | :-------: | :-------: |
-  |   AFFormer-B   | [AFFormer-B](https://github.com/dongbo811/AFFormer?tab=readme-ov-file) |     26.0     |    4.4    |   49.72   |
-  |  SeaFormer-B   | [SeaFormer-B](https://github.com/fudan-zvg/SeaFormer/tree/main/seaformer-cls) |     27.3     |    1.8    |   47.00   |
-  |   SegNext-T    | [MSCAN-T](https://download.openmmlab.com/mmsegmentation/v0.5/pretrain/segnext/mscan_t_20230227-119e8c9f.pth) |     23.3     |    6.3    |   52.58   |
-  |  SeaFormer-L   | [SeaFormer-L](https://github.com/fudan-zvg/SeaFormer/tree/main/seaformer-cls) |     29.9     |    6.4    |   49.66   |
+  | +SSAClassifier |                           Backbone                           | Latency (ms) | Params (M) | Flops (G) | mIoU (ss) |
+  | :------------: | :----------------------------------------------------------: | :----------: | ---------- | :-------: | :-------: |
+  |   AFFormer-B   | [AFFormer-B](https://github.com/dongbo811/AFFormer?tab=readme-ov-file) |     26.0     | 3.3        |    4.4    |   49.72   |
+  |  SeaFormer-B   | [SeaFormer-B](https://github.com/fudan-zvg/SeaFormer/tree/main/seaformer-cls) |     27.3     | 8.8        |    1.8    |   47.00   |
+  |   SegNext-T    | [MSCAN-T](https://download.openmmlab.com/mmsegmentation/v0.5/pretrain/segnext/mscan_t_20230227-119e8c9f.pth) |     23.3     | 4.6        |    6.3    |   52.58   |
+  |  SeaFormer-L   | [SeaFormer-L](https://github.com/fudan-zvg/SeaFormer/tree/main/seaformer-cls) |     29.9     | 14.2       |    6.4    |   49.66   |
 
 
 
@@ -143,7 +142,7 @@ SSAClassifier is an effecient and powerful pixel-level classifier, which signifi
 
 
 
-## 🌟Citation
+## 🌟 Citation
 
 If you are interested in our work, please consider giving a 🌟 and citing our work below. 
 
