@@ -1,11 +1,12 @@
 <div align="center">
 <h1>SSAClassifier </h1>
 <h3>Semantic and Spatial Adaptive Pixel-level Classifier for Semantic Segmentation</h3>
+
 [Xiaowen Ma](https://scholar.google.com/citations?hl=zh-CN&user=UXj8Q6kAAAAJ)<sup>1,2</sup>, [Zhenliang Ni](https://scholar.google.com/citations?user=2urTmpkAAAAJ&hl=zh-CN&oi=sra)<sup>1</sup>, [Xinghao Chen](https://scholar.google.com/citations?user=tuGWUVIAAAAJ&hl=zh-CN&oi=ao)<sup>1</sup>
 
 <sup>1</sup> Huawei Noah’s Ark Lab, <sup>2</sup> Zhejiang University
 
- [Paper Link](https://arxiv.org/abs/2405.06525)
+ [[Paper Link](https://arxiv.org/abs/2405.06525)]
 
 </div>
 
@@ -25,7 +26,7 @@ SSAClassifier is an effecient and powerful pixel-level classifier, which signifi
 
 ## 🏆 Performance
 
-#### 1️⃣ ADE20K
+### 1️⃣ ADE20K
 
 **Iters:** 160000	**Input size:** 512x512	**Batch size:** 16
 
@@ -50,7 +51,7 @@ SSAClassifier is an effecient and powerful pixel-level classifier, which signifi
   |    CGRSeg-B    | [EfficientFormerV2-S2](https://github.com/snap-research/EfficientFormer) |     36.0     | 19.3       |    7.6    |   47.10   |
   |    CGRSeg-L    | [EfficientFormerV2-L](https://github.com/snap-research/EfficientFormer) |     42.6     | 35.8       |   14.8    |   49.00   |
 
-#### 2️⃣ COCO-Stuff-10K
+### 2️⃣ COCO-Stuff-10K
 
 **Iters:** 80000	**Input size:** 512x512	**Batch size:** 16
 
@@ -73,7 +74,7 @@ SSAClassifier is an effecient and powerful pixel-level classifier, which signifi
   |   SegNext-T    | [MSCAN-T](https://download.openmmlab.com/mmsegmentation/v0.5/pretrain/segnext/mscan_t_20230227-119e8c9f.pth) |     23.3     | 4.6        |    6.3    |   38.91   |
   |  SeaFormer-L   | [SeaFormer-L](https://github.com/fudan-zvg/SeaFormer/tree/main/seaformer-cls) |     29.9     | 14.2       |    6.4    |   38.48   |
 
-#### 3️⃣ PASCAL-Context
+### 3️⃣ PASCAL-Context
 
 **Iters:** 80000	**Input size:** 480x480	**Batch size:** 16
 
