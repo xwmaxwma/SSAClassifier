@@ -2,7 +2,7 @@ import torch
 import torch.nn as nn
 import torch.nn.functional as F
 
-from mmseg.models.bulder import LOSSES
+from mmseg.models.builder import LOSSES
 
 @LOSSES.register_module()
 class SSALoss(nn.Module):

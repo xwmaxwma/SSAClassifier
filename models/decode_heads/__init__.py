@@ -7,8 +7,11 @@ from .ham_head import LightHamHead
 from .ham_head_ssa import LightHamHead_ssa
 from .aff_head import CLS
 from .aff_head_ssa import CLS_ssa
+from .cgr_head import CGRSeg
+from .cgr_head_ssa import CGRSeg_ssa
 
 
 __all__ = [
-    'OCRHead_ssa', 'UPerHead_ssa', 'SegformerHead_ssa', 'LightHead', 'LightHead_ssa', 'LightHamHead', 'LightHamHead_ssa','CLS', 'CLS_ssa'
+    'OCRHead_ssa', 'UPerHead_ssa', 'SegformerHead_ssa', 'LightHead', 'LightHead_ssa', 
+    'LightHamHead', 'LightHamHead_ssa','CLS', 'CLS_ssa', 'CGRSeg', 'CGRSeg_ssa'
 ]

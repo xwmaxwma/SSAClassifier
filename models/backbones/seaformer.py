@@ -8,7 +8,7 @@ from mmcv.cnn import build_norm_layer
 from mmcv.runner import _load_checkpoint
 from mmseg.utils import get_root_logger
 
-from ..builder import BACKBONES
+from mmseg.models.builder import BACKBONES
 
 
 def _make_divisible(v, divisor, min_value=None):
