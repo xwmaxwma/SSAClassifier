@@ -12,7 +12,7 @@
 
 ## 🔥 News
 
-- **`2024/09/30`**: **We fix some bugs in the code. Currently, SSAClassifier support baselines including:**
+- **`2024/09/30`**: **We fix some bugs in the code. Currently, this repository supports several baselines and the corresponding *+SSAClassifier* versions as follows.**
 
 | Backbone | HRNet  (CVPR'19)      | MiT  (NeurIPS'21)           | Swin (ICCV'21)        | AFFormer  (AAAI'23)     | SeaFormer  (ICLR'23)     | MSCAN  (NeurIPS'22)       | EfficientFormerV2  (ICCV'23) |
 | -------- | -------------------- | -------------------------- | --------------------- | ---------------------- | ----------------------- | ------------------------ | --------------------------- |
