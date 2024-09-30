@@ -12,8 +12,13 @@
 
 ## 🔥 News
 
-- **`2024/09/26`**: **SSAClassifier is accepted by NeurIPS2024!**
+- **`2024/09/30`**: **We fix some bugs in the code. Currently, SSAClassifier support baselines including:**
 
+| Backbone | HRNet  (CVPR'19)      | MiT  (NeurIPS'21)           | Swin (ICCV'21)        | AFFormer  (AAAI'23)     | SeaFormer  (ICLR'23)     | MSCAN  (NeurIPS'22)       | EfficientFormerV2  (ICCV'23) |
+| -------- | -------------------- | -------------------------- | --------------------- | ---------------------- | ----------------------- | ------------------------ | --------------------------- |
+| **Head** | **OCRNet (ECCV'20)** | **SegFormer (NeurIPS'21)** | **UperNet (ECCV'18)** | **Afformer (AAAI'23)** | **SeaFormer (ICLR'23)** | **SegNext (NeurIPS'22)** | **CGRSeg  (ECCV'24)**   |
+
+- **`2024/09/26`**: **SSAClassifier is accepted by NeurIPS2024!**
   
 
 ## 📷 Introduction
