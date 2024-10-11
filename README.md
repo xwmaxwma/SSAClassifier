@@ -1,256 +1,172 @@
-![cap](./cap.jpg)
+<div align="center">
+<h1>SSAClassifier </h1>
+<h3>Semantic and Spatial Adaptive Pixel-level Classifier for Semantic Segmentation</h3>
 
-# 🔥 News
+[Xiaowen Ma](https://scholar.google.com/citations?hl=zh-CN&user=UXj8Q6kAAAAJ)<sup>1,2</sup>, [Zhenliang Ni](https://scholar.google.com/citations?user=2urTmpkAAAAJ&hl=zh-CN&oi=sra)<sup>1</sup>, [Xinghao Chen](https://scholar.google.com/citations?user=tuGWUVIAAAAJ&hl=zh-CN&oi=ao)<sup>1</sup>
 
-- `2024/10/11`: [SSA-Seg](https://arxiv.org/abs/2405.06525) has been accepted by NeurIPS2024! It is an effective and powerful classifier for semantic segmentation. We recommend interested researchers to optimize it for semantic segmentation in remote sensing, which is a promising direction.
-- `2024/06/24`: [LOGCAN++](https://arxiv.org/abs/2406.16502) has been submitted to Arxiv, which is an extension of our previous conference paper [LOGCAN](https://ieeexplore.ieee.org/abstract/document/10095835/). The official implementation of LOGCAN++ is available!
+<sup>1</sup> Huawei Noah’s Ark Lab, <sup>2</sup> Zhejiang University
 
-# 📷 Introduction
+ [[Paper Link](https://arxiv.org/abs/2405.06525)]
 
-**rssegmentation** is an open-source semantic segmentation toolbox, which is dedicated to reproducing and developing advanced methods for semantic segmentation of remote sensing images.
+</div>
 
-- Supported Methods
-  - [LOGCAN](https://ieeexplore.ieee.org/abstract/document/10095835/) (ICASSP2023)
+## 🔥 News
 
-  - [SACANet](https://ieeexplore.ieee.org/abstract/document/10219583/) (ICME2023)
+- **`2024/09/30`**: **We fix some bugs in the code. Currently, this repository supports several baselines and the corresponding *+SSAClassifier* versions as follows.**
 
-  - [DOCNet](https://ieeexplore.ieee.org/abstract/document/10381808) (GRSL2024)
+| Backbone | HRNet  (CVPR'19)      | MiT  (NeurIPS'21)           | Swin (ICCV'21)        | AFFormer  (AAAI'23)     | SeaFormer  (ICLR'23)     | MSCAN  (NeurIPS'22)       | EfficientFormerV2  (ICCV'23) |
+| -------- | -------------------- | -------------------------- | --------------------- | ---------------------- | ----------------------- | ------------------------ | --------------------------- |
+| **Head** | **OCRNet (ECCV'20)** | **SegFormer (NeurIPS'21)** | **UperNet (ECCV'18)** | **Afformer (AAAI'23)** | **SeaFormer (ICLR'23)** | **SegNext (NeurIPS'22)** | **CGRSeg  (ECCV'24)**   |
 
-  - [LOGCAN++](https://arxiv.org/abs/2406.16502) (Under review in TGRS)
+- **`2024/09/26`**: **SSAClassifier is accepted by NeurIPS2024!**
+  
 
-  - CenterSeg (Under review)
+## 📷 Introduction
 
-  - SCSM (Under review in ISPRS J PHOTOGRAMM)
-- Supported Datasets
-  - [Vaihingen](https://www.isprs.org/education/benchmarks/UrbanSemLab/default.aspx)
-  - [Potsdam](https://www.isprs.org/education/benchmarks/UrbanSemLab/default.aspx)
-  - [LoveDA](https://codalab.lisn.upsaclay.fr/competitions/421)
-  - iSAID (update soon)
-- Supported Tools
-  - Training
-  - Testing
-  - Params and FLOPs counting
-  - Class activation maps (Updated soon)
+![](net.png)
 
-# 🔐 Preparation
+SSAClassifier is an effecient and powerful pixel-level classifier, which significantly improves the segmentation performance of various baselines with a negligible increase in computational cost. It has three key parts: semantic prototype adaptation (SEPA), spatial prototype adaptation (SPPA), and online multi-domain distillation. 
 
-```shell
-conda create -n rsseg python=3.9
-conda activate rsseg
-conda install pytorch==2.0.0 torchvision==0.15.0 torchaudio==2.0.0 pytorch-cuda=11.7 -c pytorch -c nvidia
-pip install -r requirements.txt
-```
 
-# 📒 Folder Structure
 
-Prepare the following folders to organize this repo:
+## 🏆 Performance
 
-```none
-rssegmentation
-├── rssegmentation (code)
-├── work_dirs (save the model weights and training logs)
-├── data
-│   ├── LoveDA
-│   │   ├── Train
-│   │   │   ├── Urban
-│   │   │   │   ├── images_png (original images)
-│   │   │   │   ├── masks_png (original labels)
-│   │   │   ├── Rural
-│   │   │   │   ├── images_png (original images)
-│   │   │   │   ├── masks_png (original labels)
-│   │   ├── Val (the same with Train)
-│   │   ├── Test
-│   ├── vaihingen
-│   │   ├── ISPRS_semantic_labeling_Vaihingen 
-│   │   │   ├── top (original images)
-│   │   ├── ISPRS_semantic_labeling_Vaihingen_ground_truth_COMPLETE (original labels)
-│   │   ├── ISPRS_semantic_labeling_Vaihingen_ground_truth_eroded_COMPLETE (original noBoundary lables)
-│   │   ├── train (processed)
-│   │   ├── test (processed)
-│   ├── potsdam (the same with vaihingen)
-│   │   ├── 2_Ortho_RGB (original images)
-│   │   ├── 5_Labels_all (original labels)
-│   │   ├── 5_Labels_all_noBoundary (original noBoundary lables)
-│   │   ├── train (processed)
-│   │   ├── test (processed)
-```
+### 1️⃣ ADE20K
 
-# ✂️ Data Processing
+**Iters:** 160000	**Input size:** 512x512	**Batch size:** 16
 
-## 1️⃣ Vaihingen
+- General models
 
-**train**
+  | +SSAClassifier |                           Backbone                           | Latency (ms) | Params(M) | Flops (G) | mIoU (ss) |
+  | :------------: | :----------------------------------------------------------: | :----------: | --------- | :-------: | :-------: |
+  |     OCRNet     | [HRNet-W48](https://download.openmmlab.com/pretrain/third_party/hrnetv2_w48-d2186c55.pth) |     69.3     | 8.7       |   165.0   |   47.67   |
+  |    UperNet     | [Swin-T](https://download.openmmlab.com/mmsegmentation/v0.5/pretrain/swin/swin_tiny_patch4_window7_224_20220317-1cdeb081.pth) |     54.3     | 61.1      |   236.3   |   47.56   |
+  |   SegFormer    | [MiT-B5](https://download.openmmlab.com/mmsegmentation/v0.5/pretrain/segformer/mit_b5_20220624-658746d9.pth) |     70.1     | 82.3      |   52.6    |   50.74   |
+  |    UperNet     | [Swin-L](https://download.openmmlab.com/mmsegmentation/v0.5/pretrain/swin/swin_large_patch4_window7_224_22k_20220412-aeecf2aa.pth) |    107.3     | 234.9     |   405.2   |   52.69   |
+  |  ViT-Adapter   |    [ViT-Adapter-L](https://github.com/czczup/ViT-Adapter)    |    284.9     | 364.9     |   616.3   |   55.39   |
 
-```shell
-python tools/dataset_patch_split.py \
---dataset-type "vaihingen" \
---img-dir "/home/xwma/data/Vaihingen/ISPRS_semantic_labeling_Vaihingen/top" \
---mask-dir "/home/xwma/data/Vaihingen/ISPRS_semantic_labeling_Vaihingen_ground_truth_COMPLETE" \
---output-img-dir "data/vaihingen/train/images_1024" \
---output-mask-dir "data/vaihingen/train/masks_1024" \
---split-size 1024 \
---stride 512 \
---mode "train"
-```
+- Light weight models
 
-**test and val**
+  | +SSAClassifier |                           Backbone                           | Latency (ms) | Params (M) | Flops (G) | mIoU (ss) |
+  | :------------: | :----------------------------------------------------------: | :----------: | ---------- | :-------: | :-------: |
+  |   AFFormer-B   | [AFFormer-B](https://github.com/dongbo811/AFFormer?tab=readme-ov-file) |     26.0     | 3.3        |    4.4    |   42.74   |
+  |  SeaFormer-B   | [SeaFormer-B](https://github.com/fudan-zvg/SeaFormer/tree/main/seaformer-cls) |     27.3     | 8.8        |    1.8    |   42.46   |
+  |   SegNext-T    | [MSCAN-T](https://download.openmmlab.com/mmsegmentation/v0.5/pretrain/segnext/mscan_t_20230227-119e8c9f.pth) |     23.3     | 4.6        |    6.3    |   43.90   |
+  |  SeaFormer-L   | [SeaFormer-L](https://github.com/fudan-zvg/SeaFormer/tree/main/seaformer-cls) |     29.9     | 14.2       |    6.4    |   45.36   |
+  |    CGRSeg-B    | [EfficientFormerV2-S2](https://github.com/snap-research/EfficientFormer) |     36.0     | 19.3       |    7.6    |   47.10   |
+  |    CGRSeg-L    | [EfficientFormerV2-L](https://github.com/snap-research/EfficientFormer) |     42.6     | 35.8       |   14.8    |   49.00   |
 
-```shell
-python tools/dataset_patch_split.py \
---dataset-type "vaihingen" \
---img-dir "/home/xwma/data/Vaihingen/ISPRS_semantic_labeling_Vaihingen/top" \
---mask-dir "/home/xwma/data/Vaihingen/ISPRS_semantic_labeling_Vaihingen_ground_truth_COMPLETE" \
---output-img-dir "data/vaihingen/test/images_1024" \
---output-mask-dir "data/vaihingen/test/masks_1024_RGB" \
---split-size 1024 \
---stride 1024 \
---mode "test"
-```
+### 2️⃣ COCO-Stuff-10K
 
-```shell
-python tools/dataset_patch_split.py \
---dataset-type "vaihingen" \
---img-dir "/home/xwma/data/Vaihingen/ISPRS_semantic_labeling_Vaihingen/top" \
---mask-dir "/home/xwma/data/Vaihingen/ISPRS_semantic_labeling_Vaihingen_ground_truth_eroded_COMPLETE" \
---output-img-dir "data/vaihingen/test/images_1024" \
---output-mask-dir "data/vaihingen/test/masks_1024" \
---split-size 1024 \
---stride 1024 \
---mode "test"
-```
+**Iters:** 80000	**Input size:** 512x512	**Batch size:** 16
 
-## 2️⃣ potsdam
+- General models
 
-**train**
+  | +SSAClassifier |                           Backbone                           | Latency (ms) | Params (M) | Flops (G) | mIoU (ss) |
+  | :------------: | :----------------------------------------------------------: | :----------: | ---------- | :-------: | :-------: |
+  |     OCRNet     | [HRNet-W48](https://download.openmmlab.com/pretrain/third_party/hrnetv2_w48-d2186c55.pth) |     69.3     | 8.7        |   165.0   |   37.94   |
+  |    UperNet     | [Swin-T](https://download.openmmlab.com/mmsegmentation/v0.5/pretrain/swin/swin_tiny_patch4_window7_224_20220317-1cdeb081.pth) |     54.3     | 61.1       |   236.3   |   42.30   |
+  |   SegFormer    | [MiT-B5](https://download.openmmlab.com/mmsegmentation/v0.5/pretrain/segformer/mit_b5_20220624-658746d9.pth) |     70.1     | 82.3       |   52.6    |   45.55   |
+  |    UperNet     | [Swin-L](https://download.openmmlab.com/mmsegmentation/v0.5/pretrain/swin/swin_large_patch4_window7_224_22k_20220412-aeecf2aa.pth) |    107.3     | 234.9      |   405.2   |   48.94   |
+  |  ViT-Adapter   |    [ViT-Adapter-L](https://github.com/czczup/ViT-Adapter)    |    284.9     | 364.9      |   616.3   |   51.2    |
 
-```shell
-python tools/dataset_patch_split.py \
---dataset-type "potsdam" \
---img-dir "/home/xwma/data/Potsdam/2_Ortho_RGB" \
---mask-dir "/home/xwma/data/Potsdam/5_Labels_all" \
---output-img-dir "data/potsdam/train/images_1024" \
---output-mask-dir "data/potsdam/train/masks_1024" \
---split-size 1024 \
---stride 512 \
---mode "train"
-```
+- Light weight models
 
-**test and val**
+  | +SSAClassifier |                           Backbone                           | Latency (ms) | Params (M) | Flops (G) | mIoU (ss) |
+  | :------------: | :----------------------------------------------------------: | :----------: | ---------- | :-------: | :-------: |
+  |   AFFormer-B   | [AFFormer-B](https://github.com/dongbo811/AFFormer?tab=readme-ov-file) |     26.0     | 3.3        |    4.4    |   36.40   |
+  |  SeaFormer-B   | [SeaFormer-B](https://github.com/fudan-zvg/SeaFormer/tree/main/seaformer-cls) |     27.3     | 8.8        |    1.8    |   35.92   |
+  |   SegNext-T    | [MSCAN-T](https://download.openmmlab.com/mmsegmentation/v0.5/pretrain/segnext/mscan_t_20230227-119e8c9f.pth) |     23.3     | 4.6        |    6.3    |   38.91   |
+  |  SeaFormer-L   | [SeaFormer-L](https://github.com/fudan-zvg/SeaFormer/tree/main/seaformer-cls) |     29.9     | 14.2       |    6.4    |   38.48   |
 
-```shell
-python tools/dataset_patch_split.py \
---dataset-type "potsdam" \
---img-dir "/home/xwma/data/Potsdam/2_Ortho_RGB" \
---mask-dir "/home/xwma/data/Potsdam/5_Labels_all_noBoundary" \
---output-img-dir "data/potsdam/test/images_1024" \
---output-mask-dir "data/potsdam/test/masks_1024" \
---split-size 1024 \
---stride 1024 \
---mode "test"
-```
+### 3️⃣ PASCAL-Context
 
-```shell
-python tools/dataset_patch_split.py \
---dataset-type "potsdam" \
---img-dir "/home/xwma/data/Potsdam/2_Ortho_RGB" \
---mask-dir "/home/xwma/data/Potsdam/5_Labels_all" \
---output-img-dir "data/potsdam/test/images_1024" \
---output-mask-dir "data/potsdam/test/masks_1024_RGB" \
---split-size 1024 \
---stride 1024 \
---mode "test"
-```
+**Iters:** 80000	**Input size:** 480x480	**Batch size:** 16
 
-# 📚 Use example
+- General models
 
-### 1️⃣ Training
+  | +SSAClassifier |                           Backbone                           | Latency (ms) | Params (M) | Flops (G) | mIoU (ss) |
+  | :------------: | :----------------------------------------------------------: | :----------: | ---------- | :-------: | :-------: |
+  |     OCRNet     | [HRNet-W48](https://download.openmmlab.com/pretrain/third_party/hrnetv2_w48-d2186c55.pth) |     69.3     | 8.7        |   143.3   |   50.21   |
+  |    UperNet     | [Swin-T](https://download.openmmlab.com/mmsegmentation/v0.5/pretrain/swin/swin_tiny_patch4_window7_224_20220317-1cdeb081.pth) |     54.3     | 61.1       |   207.7   |   55.11   |
+  |   SegFormer    | [MiT-B5](https://download.openmmlab.com/mmsegmentation/v0.5/pretrain/segformer/mit_b5_20220624-658746d9.pth) |     70.1     | 82.3       |   45.8    |   59.14   |
+  |    UperNet     | [Swin-L](https://download.openmmlab.com/mmsegmentation/v0.5/pretrain/swin/swin_large_patch4_window7_224_22k_20220412-aeecf2aa.pth) |    107.3     | 234.9      |   363.2   |   61.83   |
+  |  ViT-Adapter   |    [ViT-Adapter-L](https://github.com/czczup/ViT-Adapter)    |    284.9     | 364.9      |   616.3   |   66.05   |
 
-```shell
-python train.py -c "configs/logcan.py"
-```
+- Light weight models
 
-### 2️⃣ Testing
+  | +SSAClassifier |                           Backbone                           | Latency (ms) | Params (M) | Flops (G) | mIoU (ss) |
+  | :------------: | :----------------------------------------------------------: | :----------: | ---------- | :-------: | :-------: |
+  |   AFFormer-B   | [AFFormer-B](https://github.com/dongbo811/AFFormer?tab=readme-ov-file) |     26.0     | 3.3        |    4.4    |   49.72   |
+  |  SeaFormer-B   | [SeaFormer-B](https://github.com/fudan-zvg/SeaFormer/tree/main/seaformer-cls) |     27.3     | 8.8        |    1.8    |   47.00   |
+  |   SegNext-T    | [MSCAN-T](https://download.openmmlab.com/mmsegmentation/v0.5/pretrain/segnext/mscan_t_20230227-119e8c9f.pth) |     23.3     | 4.6        |    6.3    |   52.58   |
+  |  SeaFormer-L   | [SeaFormer-L](https://github.com/fudan-zvg/SeaFormer/tree/main/seaformer-cls) |     29.9     | 14.2       |    6.4    |   49.66   |
 
-**Vaihingen and Potsdam**
 
-```shell
-python test.py \
--c "configs/logcan.py" \
---ckpt "work_dirs/LoGCAN_ResNet50_Loveda/epoch=45.ckpt" \
-```
 
-**LoveDA**
-Note that since the loveda dataset needs to be evaluated online, we provide the corresponding test commands.
-```shell
-python online_test.py \
--c "configs/logcan.py" \
---ckpt "work_dirs/LoGCAN_ResNet50_Loveda/epoch=45.ckpt" \
-```
+## 📚 Use example
 
-### 3️⃣ Useful tools
+- Environment
 
-We provide two useful commands to test the model for parameters, flops and latency.
-```shell
-python tools/flops_params_count.py \
--c "configs/logcan.py" \
-```
-```shell
-python tools/latency_count.py \
--c "configs/logcan.py" \
---ckpt "work_dirs/LoGCAN_ResNet50_Loveda/epoch=45.ckpt" \
-```
-We will support feature visualizations as well as attention relationship visualizations soon.
+  ```shell
+  conda create --name ssa python=3.8 -y
+  conda activate ssa
+  pip install torch==1.8.2+cu102 torchvision==0.9.2+cu102 torchaudio==0.8.2
+  pip install timm==0.6.13
+  pip install mmcv-full==1.7.0
+  pip install opencv-python==4.1.2.30
+  pip install "mmsegmentation==0.30.0"
+  ```
 
-# 🌟 Citation
+  SSAClassifier is built based on [mmsegmentation-0.30.0](https://github.com/open-mmlab/mmsegmentation/tree/v0.30.0), which can be referenced for data preparation.
 
-If you find our repo useful for your research, please consider giving a 🌟 and citing our work below.
+- Train
+
+  ```shell
+  # Single-gpu training
+  python train.py configs/swin/upernet_swin_tiny_ade20k_ssa.py
+  
+  # Multi-gpu (4-gpu) training
+  bash dist_train.sh configs/swin/upernet_swin_tiny_ade20k_ssa.py 4
+  ```
+
+- Test
+
+  ```shell
+  # Single-gpu testing
+  python test.py configs/swin/upernet_swin_tiny_ade20k_ssa.py ${CHECKPOINT_FILE} --eval mIoU
+  
+  # Multi-gpu (4-gpu) testing
+  bash dist_test.sh configs/swin/upernet_swin_tiny_ade20k_ssa.py ${CHECKPOINT_FILE} 4 --eval mIoU
+  ```
+
+- Benchmark
+
+  ```shell
+  python benchmark.py configs/swin/upernet_swin_tiny_ade20k_ssa.py ${CHECKPOINT_FILE} --repeat-times 5
+  ```
+
+
+
+## 🌟 Citation
+
+If you are interested in our work, please consider giving a 🌟 and citing our work below. 
 
 ```
-@inproceedings{logcan,
-  title={Log-can: local-global class-aware network for semantic segmentation of remote sensing images},
-  author={Ma, Xiaowen and Ma, Mengting and Hu, Chenlu and Song, Zhiyuan and Zhao, Ziyan and Feng, Tian and Zhang, Wei},
-  booktitle={ICASSP 2023-2023 IEEE International Conference on Acoustics, Speech and Signal Processing (ICASSP)},
-  pages={1--5},
-  year={2023},
-  organization={IEEE}
-}
-
-@inproceedings{sacanet,
-  title={Sacanet: scene-aware class attention network for semantic segmentation of remote sensing images},
-  author={Ma, Xiaowen and Che, Rui and Hong, Tingfeng and Ma, Mengting and Zhao, Ziyan and Feng, Tian and Zhang, Wei},
-  booktitle={2023 IEEE International Conference on Multimedia and Expo (ICME)},
-  pages={828--833},
-  year={2023},
-  organization={IEEE}
-}
-
-@article{docnet,
-  title={DOCNet: Dual-Domain Optimized Class-Aware Network for Remote Sensing Image Segmentation},
-  author={Ma, Xiaowen and Che, Rui and Wang, Xinyu and Ma, Mengting and Wu, Sensen and Feng, Tian and Zhang, Wei},
-  journal={IEEE Geoscience and Remote Sensing Letters},
-  year={2024},
-  publisher={IEEE}
-}
-
-@misc{logcan++,
-      title={LOGCAN++: Local-global class-aware network for semantic segmentation of remote sensing images}, 
-      author={Xiaowen Ma and Rongrong Lian and Zhenkai Wu and Hongbo Guo and Mengting Ma and Sensen Wu and Zhenhong Du and Siyang Song and Wei Zhang},
-      year={2024},
-      eprint={2406.16502},
-      archivePrefix={arXiv},
-      primaryClass={cs.CV}
-      url={https://arxiv.org/abs/2406.16502}, 
+@misc{ssaclassifier,
+   title={Semantic and Spatial Adaptive Pixel-level Classifier for Semantic Segmentation}, 
+   author={Xiaowen Ma and Zhenliang Ni and Xinghao Chen},
+   year={2024},
+   eprint={2405.06525},
+   archivePrefix={arXiv},
+   primaryClass={cs.CV}
 }
 ```
 
-# 📮 Contact
 
-If you are confused about the content of our paper or look forward to further academic exchanges and cooperation, please do not hesitate to contact us. The e-mail address is xwma@zju.edu.cn. We look forward to hearing from you!
 
-# 💡 Acknowledgement
+## 💡Acknowledgment
 
 Thanks to previous open-sourced repo:
+[SeaFormer](https://github.com/fudan-zvg/SeaFormer/tree/main) [CAC](https://github.com/tianzhuotao/CAC) [AFFormer](https://github.com/dongbo811/AFFormer) [SegNeXt](https://github.com/Visual-Attention-Network/SegNeXt) [mmsegmentation](https://github.com/open-mmlab/mmsegmentation/tree/v0.30.0) [CGRSeg](https://github.com/nizhenliang/CGRSeg) [ViT-Adapter](https://github.com/czczup/ViT-Adapter)
 
-- [mmsegmentation](https://github.com/open-mmlab/mmsegmentation)
-- [pytorch lightning](https://lightning.ai/)
-- [fvcore](https://github.com/facebookresearch/fvcore)
